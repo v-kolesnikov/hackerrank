@@ -1,6 +1,6 @@
 ; https://www.hackerrank.com/challenges/s10-quartiles/problem
 
-(ns hackerrank.statistics.quartilies)
+(ns hackerrank.statistics.quartiles)
 
 (comment
   (def N (-> (read-line) clojure.string/trim Integer/parseInt))
@@ -16,21 +16,24 @@
 
 (defn median
   [xs n]
-  (let [middle (quot n 2)]
+  (let [xs (sort xs)
+        middle (quot n 2)]
     (if (odd? n)
       (nth xs middle)
       (mean [(nth xs (dec middle)) (nth xs middle)] 2))))
 
-(defn quartilies
+(defn quartiles
   [xs n]
   (let [xs (sort xs)
-        middle (median xs n)
-        left   (take-while #(<  % middle) xs)
-        right  (drop-while #(<= % middle) xs)]
-    [(median left  (count left)) middle (median right (count right))]))
+        mid (quot n 2)
+        left (take mid xs)
+        right (take-last mid xs)]
+    [(median left (count left))
+     (median xs n)
+     (median right (count right))]))
 
 (comment
-  (let [q (quartilies X N)]
+  (let [q (quartiles X N)]
     (println (nth q 0))
     (println (nth q 1))
     (println (nth q 2))))

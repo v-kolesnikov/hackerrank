@@ -27,7 +27,7 @@
       (nth xs middle)
       (mean [(nth xs (dec middle)) (nth xs middle)] 2))))
 
-(defn quartilies
+(defn quartiles
   [xs n]
   (let [xs (sort xs)
         mid (quot n 2)
@@ -43,7 +43,7 @@
 
 (defn interquartile-range
   [xs]
-  (let [[q1 _ q3] (quartilies xs (count xs))]
+  (let [[q1 _ q3] (quartiles xs (count xs))]
     (- q3 q1)))
 
 (comment
