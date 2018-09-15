@@ -8,11 +8,12 @@
 
 (defn standard-deviation
   [xs n]
-  (let [m (mean xs n)]
-    (Math/sqrt (/ (->> xs
-                       (map #(Math/pow (- % m) 2))
-                       (reduce +))
-                  n))))
+  (let [mean-value (mean xs n)
+        variance (->> xs
+                      (map #(Math/pow (- % mean-value) 2))
+                      (reduce +))]
+    (Math/sqrt (/ variance n))))
+
 (comment
   (def N (-> (read-line) clojure.string/trim Integer/parseInt))
 
@@ -20,4 +21,5 @@
     (->> (clojure.string/split (read-line) #" ")
          (map #(Integer/parseInt %))
          (vec)))
+
   (println (format "%.1f" (standard-deviation X N))))
